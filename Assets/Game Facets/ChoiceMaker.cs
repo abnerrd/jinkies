@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,17 +24,23 @@ public class ChoiceMaker
 
     private void PresentOptions()
     {
+        // Get current room
+        var playerRoom = Application.instance.GetPlayerCurrentRoom();
+
         //  Get all available options
         var playerOptions = Application.instance.GetCurrentPlayerOptions();
 
-        foreach(var o in playerOptions)
-        {
-            Debug.Log(o.Name);
-        }
+        //Trigger event for displaying text. On finish trigger event for displaying options
+        EventDelegate.OnDisplayText(playerRoom.GetRoomDescription(), () => {
+            EventDelegate.OnDisplayOptions(playerOptions.Select(o => o.Name).ToList());
+        });
+
+        //foreach(var o in playerOptions)
+        //{
+        //    Debug.Log(o.Name);
+        //}
 
         //  TODO aherrera,wspier : Set them on buttons and such
-
-        //  TODO aherrera,wspier : Update Display
     }
 
     public void OptionSelected(Option opt)
