@@ -11,5 +11,6 @@ public class StorageInteractable : Interactable
     {
         //  TODO aherrera : (no contents?) "Empty dresser, assess options"
         //                  (some contents) add option to take item into options
+        throw new NotImplementedException();
     }
 }

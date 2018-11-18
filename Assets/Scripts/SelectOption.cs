@@ -43,6 +43,8 @@ public class SelectOption : MonoBehaviour {
                 Hand.gameObject.SetActive(false);
                 _selectedOption.gameObject.GetComponent<Animator>().SetBool("IsSelected", true);
                 _selectedOption = null;
+
+                //  INVOKE AN OPTION WAS SELECTED
             }
         }
     }

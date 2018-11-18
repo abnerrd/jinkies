@@ -53,8 +53,9 @@ public class Application : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
+        	
 	}
 
     [ContextMenu("Generate Mansion")]
@@ -127,4 +128,27 @@ public class Application : MonoBehaviour
         var options = room.GetAvailableOptions();
         options[0].ActionCallback.Invoke();
     }
+
+    //  Gross that this is here, but for now centralizes logic on how we do this
+    public List<Option> GetCurrentPlayerOptions()
+    {
+        var playerCoordinates = _playerFacet.Coordinates;
+
+        if (!_mansionFacet.IsValidCoordinate(playerCoordinates))
+        {
+            Debug.LogWarning("Player not in valid coordinates!");
+            return null;
+        }
+
+        var room = _mansionFacet.GetRoom(playerCoordinates);
+
+        if (room == null)
+        {
+            Debug.LogWarning("Room not found!");
+            return null;
+        }
+
+        return room.GetAvailableOptions();
+    }
+
 }
