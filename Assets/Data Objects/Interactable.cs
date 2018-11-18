@@ -8,7 +8,7 @@ public abstract class Interactable : IInteractable
     public string InteractableName = "Object";
     public string InteractionVerb = "Touch";
 
-    public Option GetOption()
+    public virtual Option GetOption()
     {
         var debugString = string.Format("{0} {1}", InteractionVerb, InteractableName);
         return new Option()

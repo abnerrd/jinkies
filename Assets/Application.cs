@@ -60,8 +60,9 @@ public class Application : MonoBehaviour
     public void StartNewGame()
     {
         GenerateMansion();
-        //  INTIALIZE ROOMS -- done in Mansion?
+        //  TODO aherrera : INTIALIZE ROOMS -- done in Mansion?
 
+        _playerFacet.ResetPlayer();
         if (!SetPlayerLocation(StartPoint))
         {
             SetPlayerLocation(new Coordinate(0, 0));

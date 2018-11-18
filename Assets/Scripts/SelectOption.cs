@@ -44,7 +44,7 @@ public class SelectOption : MonoBehaviour {
                 _selectedOption.gameObject.GetComponent<Animator>().SetBool("IsSelected", true);
                 _selectedOption = null;
 
-                //  INVOKE AN OPTION WAS SELECTED
+                // TODO aherrera :  INVOKE AN OPTION WAS SELECTED
             }
         }
     }

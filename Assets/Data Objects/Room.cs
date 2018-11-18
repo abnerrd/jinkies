@@ -7,24 +7,83 @@ public class Room
 {
     public Coordinate Coordinates;
     public List<Connection> Connections;
-    public List<Interactable> Interactables;
+
+    //public List<Interactable> Interactables;
+    private ItemData _itemData;
+    private RoomData _roomData;
+    private CreatureData _creatureData;
+
+    public ItemData ItemData
+    {
+        get { return _itemData; }
+    }
+
+    public RoomData RoomData
+    {
+        get { return _roomData; }
+    }
 
     //  list of apparent enemies
+
+
+    //  TODO aherrera : We need to cache Interactions that can happen here so that we don't do em again
 
     public Room()
     {
         Coordinates = new Coordinate();
         Connections = new List<Connection>();
-        Interactables = new List<Interactable>();
+        _roomData = null;
+        //Interactables = new List<Interactable>();
     }
 
     public List<Option> GetAvailableOptions()
     {
         var optionList = new List<Option>();
 
-        foreach(var i in Interactables)
+        //foreach(var i in Interactables)
+        //{
+        //    optionList.Add(i.GetOption());
+        //}
+
+        //  TODO aherrera : get option from DATA
+        if (_roomData.IsWinState)
         {
-            optionList.Add(i.GetOption());
+            var winInteraction = new EscapeInteraction()
+            {
+                RequiredItems = _roomData.RequiredItems
+            };
+
+            optionList.Add(winInteraction.GetOption());
+        }
+
+        if (_roomData.HasSecretPassage)
+        {
+            //  TODO aherrera : randomize room
+            var room = Application.instance.MansionFacet.GetRoom(0, 0);
+            var secretPassageInteraction = new Connection()
+            {
+                ConnectionDestination = room,
+                InteractionVerb = "Use ",
+                InteractableName = "Secret Passage"
+            };
+
+            var searchInteractable = new SearchInteraction()
+            {
+                InteractionVerb = _roomData.ChoiceText,
+                NextInteraction = secretPassageInteraction 
+            };            
+
+            optionList.Add(searchInteractable.GetOption());
+        }
+
+        if(_itemData != null)
+        {
+            //  INTERACTION
+        }
+
+        if(_creatureData != null)
+        {
+            //  INTERACTION
         }
 
         foreach(var c in Connections)
