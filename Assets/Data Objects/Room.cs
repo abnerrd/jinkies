@@ -99,6 +99,25 @@ public class Room
 
         return optionList;
     }
+
+    public string GetRoomDescription()
+    {
+        var text = "You enter a room with ";
+        var options = GetAvailableOptions();
+        for (var i = 0; i < options.Count; i++)
+        {
+            text += options[i].Name;
+            if(i < options.Count-1)
+            { 
+                text += " and ";
+            }
+            else
+            {
+                text += ".";
+            }
+        }
+        return text;
+    }
 }
 
 [Serializable]

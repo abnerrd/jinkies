@@ -146,8 +146,12 @@ public class Application : MonoBehaviour
             Debug.LogWarning("Room not found!");
             return null;
         }
-
         return room.GetAvailableOptions();
     }
 
+    public Room GetPlayerCurrentRoom()
+    {
+        var playerCoordinates = _playerFacet.Coordinates;
+        return _mansionFacet.GetRoom(playerCoordinates);
+    }
 }

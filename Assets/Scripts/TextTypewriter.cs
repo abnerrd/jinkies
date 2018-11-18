@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Collections;
 
 [RequireComponent(typeof(Text))]
 public class TextTypewriter : MonoBehaviour
@@ -30,7 +31,7 @@ public class TextTypewriter : MonoBehaviour
         {
             return;
         }
-        
+
         _cumulativeDeltaTime += Time.deltaTime;
         while(_cumulativeDeltaTime >= CharacterInterval && _partialText.Length < Text.Length)
         {
