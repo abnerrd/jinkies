@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatureManager : MonoBehaviour {
+public class CreatureManager {
 
 	// Use this for initialization
 	void Start () {

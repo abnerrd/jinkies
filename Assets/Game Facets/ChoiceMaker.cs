@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChoiceMaker : MonoBehaviour {
+public class ChoiceMaker {
 
 	// Use this for initialization
 	void Start () {
@@ -13,4 +14,13 @@ public class ChoiceMaker : MonoBehaviour {
 	void Update () {
 		
 	}
+}
+
+/// <summary>
+/// Option data structure
+/// </summary>
+public struct Option
+{
+    public string Name;
+    public Action ActionCallback;
 }
