@@ -11,8 +11,13 @@ public class Mansion
     [SerializeField]
     private Room[][] _mansionLayout;
 
-    //  Putting generator in this class for now
-    public void GenerateRoomLayout(int rowCount, int columnCount)
+    public void CreateNewMansion(int rowCount, int columnCount)
+    {
+        GenerateLayout(rowCount, columnCount);
+        EstablishRooms();
+    }
+
+    public void GenerateLayout(int rowCount, int columnCount)
     {
         _mansionLayout = new Room[rowCount][];
 
@@ -27,54 +32,63 @@ public class Mansion
                 newRoom.Coordinates.X = c;
                 newRoom.Coordinates.Y = r;
 
-                //  TODO aherrera : prob want to move connection-ing outside of Room generation
-                //  We cannot connect rooms that are ahead if they are not yet generated
+                _mansionLayout[r][c] = newRoom;
+            }
+        }
+    }
+
+    public void EstablishRooms()
+    { 
+        for(int r = 0 ; r < _mansionLayout.Length; ++r)
+        {
+            var row = _mansionLayout[r];
+            for(int c = 0; c < row.Length; ++c)
+            {
+                var currentRoom = row[c];
+
+                //  TODO aherrera : Generate Random room data
+                InteractableData data;
+                var rng = UnityEngine.Random.Range(0, 3);
+                switch(rng)
+                {
+                    case 0: data = InteractableDatabase.instance.GetInteractableObject<RoomData>();
+                        break;
+                    case 1: data = InteractableDatabase.instance.GetInteractableObject<ItemData>();
+                        break;
+                    case 2:
+                    default: data = InteractableDatabase.instance.GetInteractableObject<CreatureData>();
+                        break;
+                }
+
+                currentRoom.Interactions.Add(data);
+
+                //  Establish connections  
+                //  We make the connections via backwards-checking
                 var topCoordinate = new Coordinate(r, c - 1);
                 var leftCoordinate = new Coordinate(r - 1, c);
 
-                if(IsValidCoordinate(topCoordinate))
+                if (IsValidCoordinate(topCoordinate))
                 {
                     var roomAtCoordinate = _mansionLayout[topCoordinate.X][topCoordinate.Y];
 
                     //  TODO aherrera : add list extension, 'AddUnique'
-                    roomAtCoordinate.Connections.Add(new Connection()
-                    {
-                        InteractableName = "Room",
-                        InteractionVerb = "Move to",
-                        ConnectionDestination = newRoom
-                    });
+                    roomAtCoordinate.Connections.Add(new Connection(currentRoom));
 
-                    newRoom.Connections.Add(new Connection()
-                    {
-                        InteractableName = "Room",
-                        InteractionVerb = "Move to",
-                        ConnectionDestination = roomAtCoordinate
-                    });
+                    currentRoom.Connections.Add(new Connection(roomAtCoordinate));
 
                 }
 
-                if(IsValidCoordinate(leftCoordinate))
+                if (IsValidCoordinate(leftCoordinate))
                 {
                     var roomAtCoordinate = _mansionLayout[leftCoordinate.X][leftCoordinate.Y];
 
                     //  TODO aherrera : add list extension, 'AddUnique'
-                    roomAtCoordinate.Connections.Add(new Connection()
-                    {
-                        InteractableName = "Room",
-                        InteractionVerb = "Move to",
-                        ConnectionDestination = newRoom
-                    });
+                    roomAtCoordinate.Connections.Add(new Connection(currentRoom));
 
-                    newRoom.Connections.Add(new Connection()
-                    {
-                        InteractableName = "Room",
-                        InteractionVerb = "Move to",
-                        ConnectionDestination = roomAtCoordinate
-                    });
+                    currentRoom.Connections.Add(new Connection(roomAtCoordinate));
                 }
 
-
-                _mansionLayout[r][c] = newRoom;
+                _mansionLayout[r][c] = currentRoom;
             }
         }
     }

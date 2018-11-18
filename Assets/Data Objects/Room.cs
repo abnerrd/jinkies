@@ -1,30 +1,69 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Room
 {
     public Coordinate Coordinates;
     public List<Connection> Connections;
-    public List<Interactable> Interactables;
 
-    //  list of apparent enemies
+    public List<InteractableData> Interactions;
+
+    //  TODO aherrera : We need to cache Interactions that can happen here so that we don't do em again
 
     public Room()
     {
         Coordinates = new Coordinate();
-        Connections = new List<Connection>();
-        Interactables = new List<Interactable>();
+        Connections = new List<Connection>();        
+        Interactions = new List<InteractableData>();
     }
 
     public List<Option> GetAvailableOptions()
     {
+        var roomData = (RoomData) Interactions.FirstOrDefault(i => i.GetType().IsAssignableFrom(typeof(RoomData)));
+        var itemData = (ItemData) Interactions.FirstOrDefault(i => i.GetType().IsAssignableFrom(typeof(ItemData)));
+        var creatureData = (CreatureData) Interactions.FirstOrDefault(i => i.GetType().IsAssignableFrom(typeof(CreatureData)));
+
         var optionList = new List<Option>();
 
-        foreach(var i in Interactables)
+        if (roomData != null)
         {
-            optionList.Add(i.GetOption());
+            if (roomData.IsWinState)
+            {
+                var winInteraction = new EscapeInteraction(roomData)
+                {
+                    RequiredItems = roomData.RequiredItems
+                };
+
+                optionList.Add(winInteraction.GetOption());
+            }
+
+            if (roomData.HasSecretPassage)
+            {
+                //  TODO aherrera : randomize room
+                var room = Application.instance.MansionFacet.GetRoom(0, 0);
+                var secretPassageInteraction = new Connection(room, roomData);
+
+                //  TODO aherrera : I Don't think this data is correct
+                var searchInteractable = new SearchInteraction(roomData)
+                {
+                    NextInteraction = secretPassageInteraction
+                };
+
+                optionList.Add(searchInteractable.GetOption());
+            }
+        }
+
+        if(itemData != null)
+        {
+            //  INTERACTION
+        }
+
+        if(creatureData != null)
+        {
+            //  INTERACTION
         }
 
         foreach(var c in Connections)
@@ -44,12 +83,12 @@ public class Room
     public string GetRoomDescription()
     {
         var text = "You enter a room with ";
-        var options = GetAvailableOptions();
-        for (var i = 0; i < options.Count; i++)
+
+        for(int i = 0; i < Interactions.Count; ++i)
         {
-            text += options[i].Name;
-            if(i < options.Count-1)
-            { 
+            text += Interactions[i].Description;
+            if (i < Interactions.Count - 1)
+            {
                 text += " and ";
             }
             else
@@ -57,6 +96,7 @@ public class Room
                 text += ".";
             }
         }
+
         return text;
     }
 }
@@ -72,11 +112,33 @@ public struct Coordinate
         X = x;
         Y = y;
     }
+
+    public override string ToString()
+    {
+        return string.Format("[{0},{1}]", X, Y);
+    }
 }
 
 public class Connection : Interactable
 {
     public Room ConnectionDestination;
+
+    public Connection(Room connectedRoom) : base(null)
+    {
+        ConnectionDestination = connectedRoom;
+
+        //  SETUP DEFAULT CONNECTION DATA
+        Data = new InteractableData()
+        {
+            ChoiceText = string.Format("Move To Room {0}", ConnectionDestination.Coordinates.ToString()),
+            Description = "Dusty Corridors"
+        };
+    }
+
+    public Connection(Room connectedRoom, InteractableData data) : base(data)
+    {
+        ConnectionDestination = connectedRoom;
+    }
 
     public override void Interact()
     {

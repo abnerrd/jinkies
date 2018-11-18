@@ -60,8 +60,9 @@ public class Application : MonoBehaviour
     public void StartNewGame()
     {
         GenerateMansion();
-        //  INTIALIZE ROOMS -- done in Mansion?
+        //  TODO aherrera : INTIALIZE ROOMS -- done in Mansion?
 
+        _playerFacet.ResetPlayer();
         if (!SetPlayerLocation(StartPoint))
         {
             SetPlayerLocation(new Coordinate(0, 0));
@@ -73,7 +74,7 @@ public class Application : MonoBehaviour
     [ContextMenu("Generate Mansion")]
     public void GenerateMansion()
     {
-        _mansionFacet.GenerateRoomLayout(Rows, Columns);
+        _mansionFacet.CreateNewMansion(Rows, Columns);
     }
 
     [ContextMenu("Log Mansion")]
@@ -98,7 +99,7 @@ public class Application : MonoBehaviour
 
         foreach(var opt in options)
         {
-            Debug.LogFormat(opt.Name);
+            Debug.LogFormat(opt.Text);
         }
     }
 

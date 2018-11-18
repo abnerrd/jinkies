@@ -32,7 +32,7 @@ public class ChoiceMaker
 
         //Trigger event for displaying text. On finish trigger event for displaying options
         EventDelegate.OnDisplayText(playerRoom.GetRoomDescription(), () => {
-            EventDelegate.OnDisplayOptions(playerOptions.Select(o => o.Name).ToList());
+            EventDelegate.OnDisplayOptions(playerOptions.Select(o => o.Text).ToList());
         });
 
         //foreach(var o in playerOptions)
@@ -45,15 +45,20 @@ public class ChoiceMaker
 
     public void OptionSelected(Option opt)
     {
+        var playerModel = Application.instance.PlayerFacet;
+
         //  TODO aherrera : this will be called from SelectOption -- hwo will we track which option is selected?
 
-        //  Do Option Interaction & Result
+        //  Do Option Interaction
+        //opt.ActionCallback.Invoke();
 
-        bool didWin = false;
-        bool didLose = false;
+
+        //  TODO aherrera : read out Option result and such
+
+        bool didWin = playerModel.HasEscaped;
+        bool didLose = playerModel.IsDead;
         if(didLose)
         {
-            //  You lose before you win
             //  Play out lose state
         }
         else if(didWin)
@@ -73,6 +78,6 @@ public class ChoiceMaker
 /// </summary>
 public struct Option
 {
-    public string Name;
+    public string Text;
     public Action ActionCallback;
 }
