@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-public static class EventDelegate
+public static partial class EventDelegate
 {
     public delegate void DisplayTextHandler(string text, Action finishCallback = null);
     public static event DisplayTextHandler DisplayText;
