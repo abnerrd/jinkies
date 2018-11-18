@@ -8,6 +8,11 @@ public class SearchInteraction : Interactable
     public bool IsSearched;
     public Interactable NextInteraction;
 
+    public SearchInteraction(InteractableData data) : base(data)
+    {
+
+    }
+
     public override Option GetOption()
     {
         if(IsSearched)

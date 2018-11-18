@@ -5,15 +5,19 @@ using UnityEngine;
 
 public abstract class Interactable : IInteractable
 {
-    public string InteractableName = "Object";
-    public string InteractionVerb = "Touch";
+    public InteractableData Data;
+
+    public Interactable(InteractableData data)
+    {
+        Data = data;
+    }
 
     public virtual Option GetOption()
     {
-        var debugString = string.Format("{0} {1}", InteractionVerb, InteractableName);
+        var debugString = Data.ChoiceText;
         return new Option()
         {
-            Name = debugString,
+            Text = debugString,
             ActionCallback = () => { Debug.Log(debugString); Interact(); }
         };
     }

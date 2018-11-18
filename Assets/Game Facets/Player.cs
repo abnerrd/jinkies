@@ -16,7 +16,7 @@ public class Player
 
     public Coordinate Coordinates;
 
-    private List<ItemData> _inventory;
+    private List<ItemData> _inventory = new List<ItemData>();
 
     public bool HasEscaped
     {

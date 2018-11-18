@@ -74,7 +74,7 @@ public class Application : MonoBehaviour
     [ContextMenu("Generate Mansion")]
     public void GenerateMansion()
     {
-        _mansionFacet.GenerateRoomLayout(Rows, Columns);
+        _mansionFacet.CreateNewMansion(Rows, Columns);
     }
 
     [ContextMenu("Log Mansion")]
@@ -99,7 +99,7 @@ public class Application : MonoBehaviour
 
         foreach(var opt in options)
         {
-            Debug.LogFormat(opt.Name);
+            Debug.LogFormat(opt.Text);
         }
     }
 

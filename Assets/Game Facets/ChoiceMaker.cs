@@ -32,7 +32,7 @@ public class ChoiceMaker
 
         //Trigger event for displaying text. On finish trigger event for displaying options
         EventDelegate.OnDisplayText(playerRoom.GetRoomDescription(), () => {
-            EventDelegate.OnDisplayOptions(playerOptions.Select(o => o.Name).ToList());
+            EventDelegate.OnDisplayOptions(playerOptions.Select(o => o.Text).ToList());
         });
 
         //foreach(var o in playerOptions)
@@ -78,6 +78,6 @@ public class ChoiceMaker
 /// </summary>
 public struct Option
 {
-    public string Name;
+    public string Text;
     public Action ActionCallback;
 }

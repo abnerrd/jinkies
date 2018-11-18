@@ -7,6 +7,11 @@ public class EscapeInteraction : Interactable
 {
     public List<ItemType> RequiredItems;
 
+    public EscapeInteraction(InteractableData data) : base(data)
+    {
+
+    }
+
     public override void Interact()
     {
         var playerModel = Application.instance.PlayerFacet;
