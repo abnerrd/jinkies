@@ -8,6 +8,7 @@ using UnityEngine;
 /// </summary>
 public class Mansion
 {
+    [SerializeField]
     private Room[][] _mansionLayout;
 
     //  Putting generator in this class for now
