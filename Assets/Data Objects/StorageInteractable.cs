@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class StorageInteractable : Interactable
 {
+    public List<Interactable> StorageContents;
+
     public override void Interact()
     {
-        throw new NotImplementedException();
+        //  TODO aherrera : (no contents?) "Empty dresser, assess options"
+        //                  (some contents) add option to take item into options
     }
 }

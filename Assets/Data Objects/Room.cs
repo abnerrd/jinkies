@@ -32,12 +32,12 @@ public class Room
             optionList.Add(c.GetOption());
         }
 
-        while(optionList.Count > 3)
+        //  TODO aherrera : returns top 3 options; Interactables have priority
+        while (optionList.Count > 3)
         {
             optionList.RemoveAt(optionList.Count - 1);
         }
 
-        //  TODO aherrera : returns top 3 options; Interactables have priority
         return optionList;
     }
 }
@@ -61,8 +61,10 @@ public class Connection : Interactable
 
     public override void Interact()
     {
-        //  TODO aherrera : Move to new coordinates
+        //  TODO aherrera,wspier : instead of directly setting player Coordinates, have a 'tryMovePlayer' that will 
+        //                          move coordinates on success
 
-        throw new NotImplementedException();
+        var playerModel = Application.instance.PlayerFacet;
+        playerModel.Coordinates = ConnectionDestination.Coordinates;
     }
 }

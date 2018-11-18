@@ -10,10 +10,11 @@ public abstract class Interactable : IInteractable
 
     public Option GetOption()
     {
+        var debugString = string.Format("{0} {1}", InteractionVerb, InteractableName);
         return new Option()
         {
-            Name = string.Format("{0} {1}", InteractionVerb, InteractableName),
-            ActionCallback = Interact
+            Name = debugString,
+            ActionCallback = () => { Debug.Log(debugString); Interact(); }
         };
     }
 
