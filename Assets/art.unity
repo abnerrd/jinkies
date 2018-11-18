@@ -157,11 +157,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 142063334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7abdb0e89f704af7b74a9a0d8cc7ee1, type: 3}
+  m_Script: {fileID: 11500000, guid: b868da80485c34f65b218fbe10c4343c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: "You enter a spooky room with a skeleton. \n\nHe doots at you."
-  CharacterInterval: 0.09
+  Text: You find a spooky ghost.
+  CharacterInterval: 0.1
 --- !u!114 &142063337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,8 +578,8 @@ GameObject:
   - component: {fileID: 544351209}
   - component: {fileID: 544351211}
   - component: {fileID: 544351210}
-  - component: {fileID: 544351212}
   - component: {fileID: 544351213}
+  - component: {fileID: 544351212}
   m_Layer: 5
   m_Name: MainPanel
   m_TagString: Untagged
@@ -650,7 +650,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 544351208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4832ad95ef06543b8a021042c28185f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 972f9c2ee1cdc4fc88acc06210265368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Description: {fileID: 142063336}
@@ -665,7 +665,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 544351208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62162edbbc17467e8c18db81a439265, type: 3}
+  m_Script: {fileID: 11500000, guid: 279e0f3c243324607b5085a80a27b0c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Hand: {fileID: 2087849368}
@@ -782,11 +782,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 694643324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7abdb0e89f704af7b74a9a0d8cc7ee1, type: 3}
+  m_Script: {fileID: 11500000, guid: b868da80485c34f65b218fbe10c4343c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Move on.
-  CharacterInterval: 0.05
+  Text: Run
+  CharacterInterval: 0.075
 --- !u!114 &694643327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248,11 +1248,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 955611322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7abdb0e89f704af7b74a9a0d8cc7ee1, type: 3}
+  m_Script: {fileID: 11500000, guid: b868da80485c34f65b218fbe10c4343c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Search the room.
-  CharacterInterval: 0.05
+  Text: Run
+  CharacterInterval: 0.075
 --- !u!114 &955611325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1337,11 +1337,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1081787374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7abdb0e89f704af7b74a9a0d8cc7ee1, type: 3}
+  m_Script: {fileID: 11500000, guid: b868da80485c34f65b218fbe10c4343c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: Hide behind the couch.
-  CharacterInterval: 0.05
+  Text: Run
+  CharacterInterval: 0.075
 --- !u!114 &1081787377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1432,11 +1432,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding:
     m_Left: 7
-    m_Right: 9
-    m_Top: 9
+    m_Right: 37
+    m_Top: 13
     m_Bottom: -76
   m_ChildAlignment: 0
-  m_Spacing: 7.77
+  m_Spacing: 9.88
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -1779,7 +1779,7 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2010262532}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c32cc078838a74469999e39c617a9f8b, type: 3}
