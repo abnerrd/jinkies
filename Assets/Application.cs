@@ -18,8 +18,7 @@ public class Application : MonoBehaviour
     public Player PlayerFacet { get { return _playerFacet; } }
 
     [Header("Startup Parameters")]
-    public bool GenerateMansionOnStartup;
-    public bool SetPlayerAtStartPoint;
+    public bool StartGameOnAwake;
     public Coordinate StartPoint;
 
     [Header("Mansion Parameters")]
@@ -46,9 +45,9 @@ public class Application : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        if (GenerateMansionOnStartup)
+        if (StartGameOnAwake)
         {
-            GenerateMansion();
+            StartNewGame();
         }
 	}
 	
@@ -58,18 +57,23 @@ public class Application : MonoBehaviour
         	
 	}
 
+    public void StartNewGame()
+    {
+        GenerateMansion();
+        //  INTIALIZE ROOMS -- done in Mansion?
+
+        if (!SetPlayerLocation(StartPoint))
+        {
+            SetPlayerLocation(new Coordinate(0, 0));
+        }
+
+        _choicesFacet.NewGameStart();
+    }
+
     [ContextMenu("Generate Mansion")]
     public void GenerateMansion()
     {
         _mansionFacet.GenerateRoomLayout(Rows, Columns);
-
-        if(SetPlayerAtStartPoint)
-        {
-            if(_mansionFacet.IsValidCoordinate(StartPoint))
-            {
-                _playerFacet.Coordinates = StartPoint;
-            }
-        }
     }
 
     [ContextMenu("Log Mansion")]
@@ -82,24 +86,16 @@ public class Application : MonoBehaviour
     public void LogPlayerOptions()
     {
         var playerCoordinates = _playerFacet.Coordinates;
+        Debug.LogFormat("At [{0}][{1}] : ", playerCoordinates.X, playerCoordinates.Y);
 
-        if(!_mansionFacet.IsValidCoordinate(playerCoordinates))
+        var options = GetCurrentPlayerOptions();
+
+        if(options == null)
         {
-            Debug.LogWarning("Player not in valid coordinates!");
+            Debug.Log("No available options!");
             return;
         }
 
-        var room = _mansionFacet.GetRoom(playerCoordinates);
-
-        if(room == null)
-        {
-            Debug.LogWarning("Room not found!");
-            return;
-        }
-
-        Debug.LogFormat("At [{0}][{1}], player can: ", playerCoordinates.X, playerCoordinates.Y);
-
-        var options = room.GetAvailableOptions();
         foreach(var opt in options)
         {
             Debug.LogFormat(opt.Name);
@@ -109,24 +105,26 @@ public class Application : MonoBehaviour
     [ContextMenu("Do First Available Action")]
     public void TakeFirstAvailableAction()
     {
-        var playerCoordinates = _playerFacet.Coordinates;
+        var options = GetCurrentPlayerOptions();
 
-        if (!_mansionFacet.IsValidCoordinate(playerCoordinates))
+        if(options == null)
         {
-            Debug.LogWarning("Player not in valid coordinates!");
+            Debug.Log("No available options!");
             return;
         }
 
-        var room = _mansionFacet.GetRoom(playerCoordinates);
-
-        if (room == null)
-        {
-            Debug.LogWarning("Room not found!");
-            return;
-        }
-
-        var options = room.GetAvailableOptions();
         options[0].ActionCallback.Invoke();
+    }
+
+    private bool SetPlayerLocation(Coordinate location)
+    {
+        if (!_mansionFacet.IsValidCoordinate(location))
+        {
+            return false;
+        }
+
+        _playerFacet.Coordinates = location;
+        return true;
     }
 
     //  Gross that this is here, but for now centralizes logic on how we do this
