@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{54D7CE5F-D923-CA9A-D95E-E7CC08ECCA18}|">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Data/NewClass.cs">
+    <Files>
+      <File FileName="Assets/Scripts/TextTypewriter.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/DisplayTextAndOptions.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SelectOption.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SetBool.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Data/NewClass.cs" Line="4" Column="24" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
