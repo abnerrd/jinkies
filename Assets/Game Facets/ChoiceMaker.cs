@@ -15,8 +15,26 @@ using UnityEngine;
 /// 
 /// </summary>
 
+public static partial class EventDelegate
+{
+    public delegate void OptionSelectedHandler(Option opt);
+    public static event OptionSelectedHandler OptionSelect;
+    public static void OptionSelected(Option opt)
+    {
+        if (OptionSelect != null)
+            OptionSelect(opt);
+    }
+}
+
 public class ChoiceMaker
 {
+    public ChoiceMaker()
+    {
+        EventDelegate.OptionSelect += OnOptionSelected;
+    }
+
+    //  TODO aherrera : there should be a de-listen
+
     public void NewGameStart()
     {
         PresentOptions();
@@ -39,19 +57,15 @@ public class ChoiceMaker
         //{
         //    Debug.Log(o.Name);
         //}
-
-        //  TODO aherrera,wspier : Set them on buttons and such
+        
+        EventDelegate.OnLoadOptions(playerOptions);
     }
 
-    public void OptionSelected(Option opt)
+    public void OnOptionSelected(Option opt)
     {
         var playerModel = Application.instance.PlayerFacet;
-
-        //  TODO aherrera : this will be called from SelectOption -- hwo will we track which option is selected?
-
-        //  Do Option Interaction
-        //opt.ActionCallback.Invoke();
-
+        
+        opt.ActionCallback.Invoke();
 
         //  TODO aherrera : read out Option result and such
 
