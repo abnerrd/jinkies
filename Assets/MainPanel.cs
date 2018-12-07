@@ -7,10 +7,15 @@ public class MainPanel : MonoBehaviour {
     public Animator Animator;
 
     private void Awake () {
-        EventDelegate.StartGame += BringPanelDown;
+        EventDelegate.ExitTitle += BringPanelDown;
 	}
 	
     private void BringPanelDown () {
         Animator.SetBool("IsDown", true);
 	}
+
+    private void StartGame()
+    {
+        EventDelegate.OnStartGame();
+    }
 }

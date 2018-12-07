@@ -66,6 +66,7 @@ public class TextTypewriter : MonoBehaviour
     {
         _finished = false;
         _partialText = "";
+        _text.text = "";
         _cumulativeDeltaTime = 0;
     }
 }

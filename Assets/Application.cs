@@ -2,6 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public static partial class EventDelegate
+{
+    public delegate void StartGameHandler();
+    public static event StartGameHandler StartGame;
+    public static void OnStartGame()
+    {
+        if (StartGame != null)
+            StartGame();
+    }
+}
+
 /// <summary>
 /// Entry to game flow.
 /// </summary>
@@ -18,8 +29,8 @@ public class Application : MonoBehaviour
     public Player PlayerFacet { get { return _playerFacet; } }
 
     [Header("Startup Parameters")]
-    public bool StartGameOnAwake;
     public Coordinate StartPoint;
+    public bool GameStarted;
 
     [Header("Mansion Parameters")]
     public int Rows = 5;
@@ -40,24 +51,10 @@ public class Application : MonoBehaviour
         _choicesFacet = new ChoiceMaker();
         _playerFacet = new Player();
         _creatureManagerFacet = new CreatureManager();
+        EventDelegate.StartGame += OnGameStart;
     }
 
-    // Use this for initialization
-    void Start ()
-    {
-        if (StartGameOnAwake)
-        {
-            StartNewGame();
-        }
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        	
-	}
-
-    public void StartNewGame()
+    private void OnGameStart()
     {
         GenerateMansion();
         //  TODO aherrera : INTIALIZE ROOMS -- done in Mansion?
@@ -67,7 +64,6 @@ public class Application : MonoBehaviour
         {
             SetPlayerLocation(new Coordinate(0, 0));
         }
-
         _choicesFacet.NewGameStart();
     }
 

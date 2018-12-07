@@ -128,11 +128,9 @@ public class Connection : Interactable
         ConnectionDestination = connectedRoom;
 
         //  SETUP DEFAULT CONNECTION DATA
-        Data = new InteractableData()
-        {
-            ChoiceText = string.Format("Move To Room {0}", ConnectionDestination.Coordinates.ToString()),
-            Description = "Dusty Corridors"
-        };
+        Data = ScriptableObject.CreateInstance<InteractableData>();
+        Data.ChoiceText = string.Format("Move To Room {0}", ConnectionDestination.Coordinates.ToString());
+        Data.Description = "Dusty Corridors";
     }
 
     public Connection(Room connectedRoom, InteractableData data) : base(data)

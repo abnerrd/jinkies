@@ -5,12 +5,20 @@ using UnityEngine;
 
 public static partial class EventDelegate
 {
-    public delegate void LoadOptionChoices(List<Option> optionsList);
-    public static event LoadOptionChoices LoadOptions;
+    public delegate void LoadOptionsHandler(List<Option> optionsList);
+    public static event LoadOptionsHandler LoadOptions;
     public static void OnLoadOptions(List<Option> optionsList)
     {
         if (LoadOptions != null)
             LoadOptions(optionsList);
+    }
+
+    public delegate void ToggleOptionSelectHandler(bool visible);
+    public static event ToggleOptionSelectHandler ToggleOptionsSelectVisible;
+    public static void OnToggleOptionSelectVisible(bool visible)
+    {
+        if (ToggleOptionsSelectVisible != null)
+            ToggleOptionsSelectVisible(visible);
     }
 }
 
@@ -27,16 +35,19 @@ public class SelectOption : MonoBehaviour
 
     private Transform _selectedOption;
     private Option _selectOptionData;
+    private bool _selectVisible;
 
     private void Awake()
     {
         _currentOptions = new Option[3];
         EventDelegate.LoadOptions += LoadOptions;
+        EventDelegate.ToggleOptionsSelectVisible += ToggleSelectVisible;
     }
 
     private void OnDestroy()
     {
         EventDelegate.LoadOptions -= LoadOptions;
+        EventDelegate.ToggleOptionsSelectVisible -= ToggleSelectVisible;
     }
 
     private void LoadOptions(List<Option> optionsList)
@@ -44,8 +55,30 @@ public class SelectOption : MonoBehaviour
         optionsList.CopyTo(_currentOptions);
     }
 
+    private void ToggleSelectVisible(bool visible)
+    {
+        _selectVisible = visible;
+        if(visible == true)
+        {
+            var pos = Option1.position;
+            pos.x += Option1.rect.width / 2;
+            pos.y += (Option1.rect.height + 10);
+            Hand.position = pos;
+            Hand.gameObject.SetActive(true);
+        }
+        else
+        {
+            Hand.gameObject.SetActive(false);
+        }
+    }
+
     private void Update()
     {
+        if(!_selectVisible)
+        {
+            return;
+        }
+
         RectTransform tempOption = null;
         if(Input.GetKeyDown(KeyCode.Q))
         {
@@ -80,7 +113,9 @@ public class SelectOption : MonoBehaviour
                 _selectedOption.gameObject.GetComponent<Animator>().SetBool("IsSelected", true);
                 _selectedOption = null;
 
-                EventDelegate.OptionSelected(_selectOptionData);
+                EventDelegate.OnOptionSelected(_selectOptionData);
+                EventDelegate.OnClearOptions();
+                ToggleSelectVisible(false);
             }
         }
     }

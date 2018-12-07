@@ -19,6 +19,14 @@ public static partial class EventDelegate
         if (DisplayOptions != null)
             DisplayOptions(options, finishCallback);
     }
+
+    public delegate void ClearOptionsHandler();
+    public static event ClearOptionsHandler ClearOptions;
+    public static void OnClearOptions()
+    {
+        if (ClearOptions != null)
+            ClearOptions();
+    }
 }
 
 public class DisplayTextAndOptions : MonoBehaviour {
@@ -32,12 +40,14 @@ public class DisplayTextAndOptions : MonoBehaviour {
     {
         EventDelegate.DisplayText += DisplayText;
         EventDelegate.DisplayOptions += DisplayOptions;
+        EventDelegate.ClearOptions += ClearOptions;
     }
 
     private void OnDestroy()
     {
         EventDelegate.DisplayText -= DisplayText;
         EventDelegate.DisplayOptions -= DisplayOptions;
+        EventDelegate.ClearOptions -= ClearOptions;
     }
 
     private void Display () {
@@ -54,7 +64,15 @@ public class DisplayTextAndOptions : MonoBehaviour {
         });
     }
 
+    private void ClearOptions()
+    {
+        Option1.ResetText();
+        Option2.ResetText();
+        Option3.ResetText();
+    }
+
     private void DisplayOptions(List<string> options, Action finishCallback = null){
+        EventDelegate.OnToggleOptionSelectVisible(false);
         if(options.Count >0)
         {
             Option1.Text = options[0];
@@ -70,13 +88,22 @@ public class DisplayTextAndOptions : MonoBehaviour {
                             Option3.Text = options[2];
                             Option3.Display(() =>
                             {
-                                if(finishCallback != null)
+                                if (finishCallback != null)
                                 {
                                     finishCallback();
                                 }
+                                EventDelegate.OnToggleOptionSelectVisible(true); 
                             });
                         }
+                        else
+                        { 
+                            EventDelegate.OnToggleOptionSelectVisible(true); 
+                        }
                     });
+                }
+                else
+                {
+                    EventDelegate.OnToggleOptionSelectVisible(true);
                 }
             });
         }

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public static partial class EventDelegate
 {
-    public delegate void StartGameHandler();
-    public static event StartGameHandler StartGame;
-    public static void OnStartGame()
+    public delegate void ExitTitleHandler();
+    public static event ExitTitleHandler ExitTitle;
+    public static void OnExitTitle()
     {
-        if (StartGame != null)
-            StartGame();
+        if (ExitTitle != null)
+            ExitTitle();
     }
 }
 
@@ -53,7 +53,7 @@ public class TitleScreen : MonoBehaviour {
         if(Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.E))
         {
             Animator.SetBool("Fade", true);
-            EventDelegate.OnStartGame();
+            EventDelegate.OnExitTitle();
         }
 	}
 }

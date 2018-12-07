@@ -19,7 +19,7 @@ public static partial class EventDelegate
 {
     public delegate void OptionSelectedHandler(Option opt);
     public static event OptionSelectedHandler OptionSelect;
-    public static void OptionSelected(Option opt)
+    public static void OnOptionSelected(Option opt)
     {
         if (OptionSelect != null)
             OptionSelect(opt);
