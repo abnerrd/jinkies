@@ -21,8 +21,8 @@ public class TextTypewriter : MonoBehaviour
     private void Awake()
     {
         _text = GetComponent<Text>();
-        _partialText = "";
-        _cumulativeDeltaTime = 0;
+
+        ResetText();
     }
 
     private void Update()
@@ -46,6 +46,10 @@ public class TextTypewriter : MonoBehaviour
             if(_finishedCallback != null)
             {
                 _finishedCallback();
+                _finishedCallback = null;
+
+                _display = false;
+                _finished = false;
             }
         }
     }
@@ -53,6 +57,15 @@ public class TextTypewriter : MonoBehaviour
     public void Display(Action FinishedCallback = null)
     {
         _display = true;
+        ResetText();
+
         _finishedCallback = FinishedCallback;
+    }
+
+    public void ResetText()
+    {
+        _finished = false;
+        _partialText = "";
+        _cumulativeDeltaTime = 0;
     }
 }
