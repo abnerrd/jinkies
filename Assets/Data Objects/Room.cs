@@ -58,7 +58,9 @@ public class Room
 
         if(itemData != null)
         {
-            //  INTERACTION
+            var itemInteraction = new ItemInteraction(itemData);
+
+            optionList.Add(itemInteraction.GetOption());
         }
 
         if(creatureData != null)

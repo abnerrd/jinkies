@@ -78,6 +78,7 @@ public class ChoiceMaker
         else if(didWin)
         {
             //  Play out win state
+            Debug.LogError("WINNER WINNER");
         }
         else
         {

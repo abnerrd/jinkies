@@ -7,7 +7,7 @@ public class EscapeInteraction : Interactable
 {
     public List<ItemType> RequiredItems;
 
-    public EscapeInteraction(InteractableData data) : base(data)
+    public EscapeInteraction(RoomData data) : base(data)
     {
 
     }
