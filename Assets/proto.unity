@@ -420,10 +420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b78ccd42f4b2fd541b61544b6092279c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartGameOnAwake: 1
   StartPoint:
     X: 0
     Y: 0
+  GameStarted: 0
   Rows: 5
   Columns: 5
 --- !u!4 &310638344
@@ -956,7 +956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.05158381, y: 0.053655524}
   m_AnchorMax: {x: 0.9148833, y: 1}
-  m_AnchoredPosition: {x: 0, y: 240.7}
+  m_AnchoredPosition: {x: 0, y: 500}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &825847656
